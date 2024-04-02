@@ -2,8 +2,7 @@
 # so turn off cookieless for tests
 # TODO: Find better work around for test browser switch hardcoded
 #       to django.contrib.session being in MIDDLEWARE
-from functools import wraps
-from django.utils.decorators import available_attrs
+from functools import WRAPPER_ASSIGNMENTS, wraps
 
 # Just tags the view for special handling by the middleware
 # but only do so if we aren't in testing mode ...
@@ -42,4 +41,4 @@ def no_cookies(view_func):
         # mark on intial decoration - rather than on running the view
         view_func.no_cookies = True
         view_func.csrf_exempt = True
-    return wraps(view_func, assigned=available_attrs(view_func))(wrapped_view)
+    return wraps(view_func, assigned=WRAPPER_ASSIGNMENTS)(wrapped_view)

@@ -41,7 +41,7 @@ class CookielessSessionMiddleware:
         self._re_forms = re.compile("</form>", re.I)
         self._re_body = re.compile("</body>", re.I)
         self._sesh = CryptSession()
-        self.standard_session = SessionMiddleware()
+        self.standard_session = SessionMiddleware(get_response)
 
         self.get_response = get_response
         engine = import_module(settings.SESSION_ENGINE)
