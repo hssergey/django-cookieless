@@ -7,3 +7,6 @@ dist
 *.pot
 *.pyc
 local_settings.py
+venv
+*.sql3
+
