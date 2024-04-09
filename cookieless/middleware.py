@@ -220,8 +220,10 @@ class CookielessSessionMiddleware:
                     ).encode()
                 except:
                     pass
-            response['Content-Length'] = len(response.content);
+            if hasattr(response, "content"):
+                response['Content-Length'] = len(response.content)
             return response
         else:
-            response['Content-Length'] = len(response.content);
+            if hasattr(response, "content"):
+                response['Content-Length'] = len(response.content)
             return response
