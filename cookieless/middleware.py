@@ -70,10 +70,9 @@ class CookielessSessionMiddleware:
         name = settings.SESSION_COOKIE_NAME
         session_key = ""
         match = resolve(request.path)
-        no_cookies = False
+        no_cookies = request.COOKIES.get('no_cookies', False)
 
-        if match and getattr(match.func, "no_cookies", False):
-            no_cookies = True
+        if no_cookies:
             if request.POST:
                 session_key = self._sesh.decrypt(request, request.POST.get(name, None))
             if not session_key and self.settings.get("USE_GET", False):
@@ -116,7 +115,8 @@ class CookielessSessionMiddleware:
         session every time, save the changes and set a session cookie.
         NB: request.COOKIES are the sent ones and response.cookies the set ones!
         """
-        if getattr(request, "no_cookies", False):
+        no_cookies = request.COOKIES.get('no_cookies', False)
+        if no_cookies:
             if request.COOKIES:
                 if self.settings.get("NO_COOKIE_PERSIST", False):
                     # Don't persist a session with cookieless for any session

@@ -22,6 +22,7 @@ class FuncTestCase(BaseFuncTestCase):
     def test_session_in_tags_html(self):
         """ Confirm session is generated in html via tags """
         self.settings["REWRITE"] = False
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/")
         url = "?%s=" % settings.SESSION_COOKIE_NAME
         # Check form session id is set
@@ -31,6 +32,7 @@ class FuncTestCase(BaseFuncTestCase):
     def test_session_in_rewritten_html(self):
         """ Confirm session is rewritten into html """
         self.settings["REWRITE"] = True
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/plain-view.html")
         url = "?%s=" % self.skey
         # Check form session id is set
@@ -41,6 +43,7 @@ class FuncTestCase(BaseFuncTestCase):
         """ Confirm session is rewritten into html """
         self.settings["REWRITE"] = True
         self.settings["USE_GET"] = False
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/plain-view.html")
         url = "?%s=" % settings.SESSION_COOKIE_NAME
         # Check form session id is set but urls aren't
@@ -62,6 +65,7 @@ class FuncTestCase(BaseFuncTestCase):
         self.settings["REWRITE"] = False
         self.settings["URL_SPECIFIC"] = False
         self.settings["CLIENT_ID"] = False
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/index.html")
         session, session_id = self.get_session(response)
         session_key = session.session_key
@@ -83,6 +87,7 @@ class FuncTestCase(BaseFuncTestCase):
         self.settings["URL_SPECIFIC"] = True
         self.settings["CLIENT_ID"] = False
         url = "/index.html"
+        self.browser.get("/disable_cookies")
         response = self.browser.get(url)
         session, session_id = self.get_session(response, url)
         start_session_key = session.session_key
@@ -111,6 +116,7 @@ class FuncTestCase(BaseFuncTestCase):
         self.settings["URL_SPECIFIC"] = True
         self.settings["CLIENT_ID"] = False
         url = "/index.html"
+        self.browser.get("/disable_cookies")
         response = self.browser.get(url)
         session, session_id = self.get_session(response, url)
         start_session_key = session.session_key
@@ -137,6 +143,7 @@ class FuncTestCase(BaseFuncTestCase):
         self.settings["CLIENT_ID"] = True
         url = "/index.html"
         agent = "unknown browser"
+        self.browser.get("/disable_cookies")
         response = self.browser.get(url, HTTP_USER_AGENT=agent)
         session, session_id = self.get_session(response, url, agent)
         start_session_key = session.session_key
@@ -159,6 +166,7 @@ class FuncTestCase(BaseFuncTestCase):
         self.settings["REWRITE"] = True
         self.settings["USE_GET"] = True
         url = "/plain-view.html"
+        self.browser.get("/disable_cookies")
         response = self.browser.get(url)
 
         search_str = r'"/\?' + settings.SESSION_COOKIE_NAME + '=(.*?)"'
@@ -187,6 +195,7 @@ class FuncTestCase(BaseFuncTestCase):
         """Check that content length is set correctly"""
         self.settings["REWRITE"] = True
         self.settings["USE_GET"] = True
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/plain-view.html")
         url = "?%s=" % self.skey
         # Check content is encoded

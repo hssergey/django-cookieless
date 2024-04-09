@@ -42,6 +42,7 @@ class SignalFuncTestCase(BaseFuncTestCase):
         signal = (None, None)
         scounter = 0
         self.assertEqual(signal, (None, None))
+        self.browser.get("/disable_cookies")
         response = self.browser.get("/index.html")
         session, session_id = self.get_session(response)
         self.assertNotEqual(signal, (None, None))

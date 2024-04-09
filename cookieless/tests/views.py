@@ -7,6 +7,18 @@ from django.utils.html import mark_safe
 from cookieless.cryptsession import CryptSession
 
 
+def disable_cookies(request):
+    response = HttpResponse("ok")
+    response.set_cookie('no_cookies', '1')
+    return response
+
+
+def enable_cookies(request):
+    response = HttpResponse('ok')
+    response.delete_cookie('no_cookies')
+    return response
+
+
 def session_data(request):
     """ Utility function to display session """
     html = "My session %s.<ul>" % request.session.session_key
