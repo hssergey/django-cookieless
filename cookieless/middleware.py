@@ -73,10 +73,13 @@ class CookielessSessionMiddleware:
         no_cookies = request.COOKIES.get('no_cookies', False)
 
         if no_cookies:
-            if request.POST:
-                session_key = self._sesh.decrypt(request, request.POST.get(name, None))
-            if not session_key and self.settings.get("USE_GET", False):
-                session_key = self._sesh.decrypt(request, request.GET.get(name, ""))
+            try:
+                if request.POST:
+                    session_key = self._sesh.decrypt(request, request.POST.get(name, None))
+                if not session_key and self.settings.get("USE_GET", False):
+                    session_key = self._sesh.decrypt(request, request.GET.get(name, ""))
+            except:
+                session_key = ''
         else:
             session_key = request.COOKIES.get(name, "")
 
