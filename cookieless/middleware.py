@@ -69,7 +69,7 @@ class CookielessSessionMiddleware:
         """
         name = settings.SESSION_COOKIE_NAME
         session_key = ""
-        match = resolve(request.path)
+        # match = resolve(request.path)
         no_cookies = request.COOKIES.get('no_cookies', False)
 
         if no_cookies:
